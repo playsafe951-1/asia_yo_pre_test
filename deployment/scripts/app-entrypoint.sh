@@ -41,6 +41,8 @@ mkdir -p /var/www/html/storage/framework/{sessions,views,cache/data} \
          /var/www/html/storage/logs \
          /var/www/html/bootstrap/cache
 
+ls -al
+
 npm run build
 php artisan migrate --force
 php artisan optimize:clear

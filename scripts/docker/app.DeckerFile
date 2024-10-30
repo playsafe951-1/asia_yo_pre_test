@@ -103,8 +103,6 @@ RUN mkdir -p \
     database && \
     chmod -R ug+rwx storage bootstrap/cache
 
-RUN php artisan storage:link
-
 RUN chown -R octane:octane \
     storage \
     bootstrap/cache \
