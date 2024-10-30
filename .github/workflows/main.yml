@@ -2,7 +2,7 @@ name: Docker Build and Push
 
 on:
   workflow_run:
-    workflows: ["Laravel Tests"]
+    workflows: ["laravel_tests"]
     types:
       - completed
     branches: [ "main" ]
