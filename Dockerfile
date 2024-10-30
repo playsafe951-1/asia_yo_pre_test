@@ -86,6 +86,7 @@ RUN set -eux; \
 	gosu nobody true
 
 # 複製專案文件
+COPY --from=vendor /var/www/html/vendor /var/www/html/vendor
 COPY . .
 
 RUN npm install
