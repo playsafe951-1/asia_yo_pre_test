@@ -25,6 +25,21 @@ RUN composer install \
 
 ####################################################################################################################    
 
+# 使用 node 容器，並把此階段命名為 assets
+FROM node:latest AS assets
+
+# 設定容器內的工作目錄
+WORKDIR /var/www/html
+
+# 將全部專案都複製進去
+COPY . .
+
+# 使用 npm 安裝前端依賴套件，並打包前端資源
+RUN npm install \
+    && npm run build
+
+####################################################################################################################
+
 FROM php:8.3-cli-bullseye
 
 USER root
@@ -32,9 +47,6 @@ LABEL maintainer="Allen"
 
 ENV ROOT=/var/www/html
 WORKDIR $ROOT
-
-# 將全部專案都複製進去
-COPY . .
 
 SHELL ["/bin/bash", "-exou", "pipefail", "-c"]
 
@@ -55,6 +67,10 @@ RUN apt-get update && \
     docker-php-ext-install pdo_mysql opcache pcntl && \
     pecl install redis swoole && \
     docker-php-ext-enable redis swoole
+
+# 安装 Node.js 和 npm
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
+    && apt-get install -y nodejs
 
 ARG UID=1000
 ARG GID=1000
