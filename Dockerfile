@@ -33,6 +33,9 @@ LABEL maintainer="Allen"
 ENV ROOT=/var/www/html
 WORKDIR $ROOT
 
+# 將全部專案都複製進去
+COPY . .
+
 SHELL ["/bin/bash", "-exou", "pipefail", "-c"]
 
 # 安全地處理 libc-bin 問題
@@ -52,10 +55,6 @@ RUN apt-get update && \
     docker-php-ext-install pdo_mysql opcache pcntl && \
     pecl install redis swoole && \
     docker-php-ext-enable redis swoole
-
-# 安装 Node.js 和 npm
-RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
-    && apt-get install -y nodejs
 
 ARG UID=1000
 ARG GID=1000
