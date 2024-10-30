@@ -25,21 +25,6 @@ RUN composer install \
 
 ####################################################################################################################    
 
-# 使用 node 容器，並把此階段命名為 assets
-FROM node:latest AS assets
-
-# 設定容器內的工作目錄
-WORKDIR /var/www/html
-
-# 將全部專案都複製進去
-COPY . .
-
-# 使用 npm 安裝前端依賴套件，並打包前端資源
-RUN npm install \
-    && npm run build
-
-####################################################################################################################
-
 FROM php:8.3-cli-bullseye
 
 USER root
@@ -102,8 +87,6 @@ RUN mkdir -p \
     bootstrap/cache \
     database && \
     chmod -R ug+rwx storage bootstrap/cache
-
-RUN php artisan storage:link
 
 RUN chown -R octane:octane \
     storage \
