@@ -13,11 +13,11 @@ groupmod -g $GROUP_ID octane
 if [ ! -f /config/.env ]; then
     echo ".env file not found in /config, copying from example..."
     # 檢查範例 .env 文件是否存在
-    if [ -f /var/www/html/example/config/.env ]; then
-        cp /var/www/html/example/config/.env /config/.env
-        echo "Copied example .env to /config/.env"
+    if [ -f /var/www/html/.env.example ]; then
+        cp /var/www/html/.env.example /config/.env
+        echo "Copied example .env.example to /config/.env"
     else
-        echo "Warning: Example .env file not found in /var/www/html/example/"
+        echo "Warning: Example .env.example file not found in /var/www/html/"
         echo "Please ensure a valid .env file is provided."
     fi
 else
@@ -44,6 +44,7 @@ mkdir -p /var/www/html/storage/framework/{sessions,views,cache/data} \
 ls -al
 
 npm run build
+php artisan key:generate
 php artisan migrate --force
 php artisan optimize:clear
 php artisan package:discover --ansi

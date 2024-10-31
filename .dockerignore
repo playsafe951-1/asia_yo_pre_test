@@ -31,7 +31,6 @@ docker_test
 # 其他
 .editorconfig
 .env
-.env.example
 .gitattributes
 .gitignore
 .phpunit.result.cache
